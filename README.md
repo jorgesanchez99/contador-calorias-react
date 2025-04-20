@@ -1,54 +1,78 @@
-# React + TypeScript + Vite
+# Calorie Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a **Calorie Tracker** application built with **React**, **TypeScript**, and **Vite**. It allows users to track their daily calorie intake and activities, providing a simple and interactive interface.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Add Activities**: Users can log activities with their respective calorie values.
+- **Display Calories**: A summary of total calories consumed and burned is displayed.
+- **Category Management**: Activities are categorized for better organization.
+- **State Management**: Uses React's Context API and Reducers for state management.
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+The project is organized as follows:
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```
+src/
+  components/
+    ActivityList.tsx       // Displays the list of activities
+    CaloriesDisplay.tsx    // Shows the total calories
+    CalorieTracker.tsx     // Main component for tracking
+    Form.tsx               // Form to add new activities
+  data/
+    categories.ts          // Predefined activity categories
+  reducers/
+    activity-reducer.ts    // Reducer for managing activity state
+  types/
+    index.ts               // Type definitions
+  utils/
+    index.ts               // Utility functions
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+- Node.js (v16 or later)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/jorgesanchez99/contador-calorias-react.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd contador-calorias-react
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Running the Application
+
+To start the development server:
+```bash
+npm run dev
 ```
+
+The application will be available at `http://localhost:5173`.
+
+### Building for Production
+
+To create a production build:
+```bash
+npm run build
+```
+
+The build output will be in the `dist/` directory.
+
+## Technologies Used
+
+- **React**: For building the user interface.
+- **TypeScript**: For type safety and better developer experience.
+- **Vite**: For fast development and build tooling.
+
