@@ -20,7 +20,7 @@ function App() {
     <>
       <header className="bg-lime-500 py-3">
         <div className="max-w-3xl mx-auto flex justify-between items-center px-5">
-          <h1 className="text-4xl font-bold text-white uppercase w-full text-center sm:text-left">
+          <h1 className="text-xl md:text-4xl font-bold text-white uppercase w-full text-center sm:text-left">
             Contador de Calorías
           </h1>
           <button
@@ -30,7 +30,7 @@ function App() {
             title="Reiniciar aplicación"
             aria-label="Reiniciar aplicación"
           >
-            Reiniciar
+            Restart
             <RotateCcw size={18} />
           </button>
         </div>

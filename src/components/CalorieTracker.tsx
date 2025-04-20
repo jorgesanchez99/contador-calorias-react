@@ -7,22 +7,22 @@ type CalorieTrackerProps = {
 };
 
 
-export const CalorieTracker = ({activities}:CalorieTrackerProps) => {
+export const CalorieTracker = ({ activities }: CalorieTrackerProps) => {
 
     //* Contadores
     const caloriesConsumed = useMemo(() => {
-        return activities.reduce((acc, activity) => activity.category === 1 
-        ? acc + activity.calories 
-        : acc, 0);
+        return activities.reduce((acc, activity) => activity.category === 1
+            ? acc + activity.calories
+            : acc, 0);
     }
-    , [activities]);
+        , [activities]);
 
     const caloriesBurned = useMemo(() => {
-        return activities.reduce((acc, activity) => activity.category === 2 
-        ? acc + activity.calories 
-        : acc, 0);
+        return activities.reduce((acc, activity) => activity.category === 2
+            ? acc + activity.calories
+            : acc, 0);
     }
-    , [activities]);
+        , [activities]);
 
     //* Calorias Totales
     const totalCalories = useMemo(() => {
@@ -30,31 +30,31 @@ export const CalorieTracker = ({activities}:CalorieTrackerProps) => {
     }, [caloriesConsumed, caloriesBurned]);
 
 
-  return (
-    <>
-        <h2 className="text-4xl font-black text-white text-center">Resumen de Calorias</h2>
+    return (
+        <>
+            <h2 className="text-4xl font-black text-white text-center">Resumen de Calorias</h2>
 
-        <div className="flex flex-col items-center md:flex-row md:justify-between gap-4 mt-6 mb-10">
+            <div className="flex flex-col items-center md:flex-row md:justify-between gap-4 mt-6 mb-10 p-3">
 
-            <CaloriesDisplay
-                calories={caloriesConsumed}
-                texto="Consumidas"
-            />
+                <CaloriesDisplay
+                    calories={caloriesConsumed}
+                    texto="Consumidas"
+                />
 
-            <CaloriesDisplay
-                calories={totalCalories}
-                texto="Totales"
-            />
 
-<CaloriesDisplay
-                calories={caloriesBurned}
-                texto="Gastadas"
-            />
+                <CaloriesDisplay
+                    calories={caloriesBurned}
+                    texto="Gastadas"
+                />
+                <CaloriesDisplay
+                    calories={totalCalories}
+                    texto="Diferencia"
+                />
 
-            
-        </div>
 
-    
-    </>
-  )
+            </div>
+
+
+        </>
+    )
 }
