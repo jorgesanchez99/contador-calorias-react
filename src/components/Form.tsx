@@ -1,16 +1,17 @@
-import { ChangeEvent, Dispatch, FormEvent, useState } from "react";
+import { ChangeEvent, Dispatch, FormEvent, useEffect, useState } from "react";
 import { categories } from "../data/categories";
 import { Activity } from "../types";
-import { AcitivityActions } from '../reducers/activity-reducer';
+import { ActivityActions, ActivityState } from '../reducers/activity-reducer';
 import {v4 as uuidv4} from 'uuid';
 
 
 type FormProps = {
-    dispatch: Dispatch<AcitivityActions>;
+    dispatch: Dispatch<ActivityActions>;
+    state: ActivityState;
 }
 
 
-export default function Form({dispatch}: FormProps) {
+export default function Form({dispatch,state}: FormProps) {
 
     const initialState : Activity = {
         id: uuidv4(),
@@ -20,6 +21,16 @@ export default function Form({dispatch}: FormProps) {
     }
 
     const [activity, setActivity] = useState<Activity>(initialState);
+
+    useEffect(() => {
+      if(state.activeId) {
+        const activityToEdit = state.activities.find(activity => activity.id === state.activeId);
+        if (activityToEdit) {
+            setActivity(activityToEdit);
+        }
+      }
+    }, [state.activeId, state.activities]);
+    
     
     const capitalize = (text: string) =>
         text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
