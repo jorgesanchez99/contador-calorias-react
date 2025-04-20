@@ -36,7 +36,7 @@ export default function Form({dispatch,state}: FormProps) {
         text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
     
     const parsedValue = (id: string, value: string) => {
-        if (id === 'name') return capitalize(value.trim());
+        if (id === 'name') return value;
         const num = Number(value);
         return isNaN(num) ? 0 : num;
     };
@@ -59,7 +59,11 @@ export default function Form({dispatch,state}: FormProps) {
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        dispatch({type: 'save-activity', payload: {newActivity: activity}});
+        const newActivity: Activity = {
+            ...activity,
+            name: capitalize(activity.name.trim()),
+        }
+        dispatch({type: 'save-activity', payload: {newActivity}});
         setActivity({
             ...initialState,
             id: uuidv4()
