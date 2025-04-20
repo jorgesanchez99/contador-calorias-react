@@ -1,23 +1,65 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, Dispatch, FormEvent, useState } from "react";
 import { categories } from "../data/categories";
+import { Activity } from "../types";
+import { AcitivityActions } from '../reducers/activity-reducer';
+import {v4 as uuidv4} from 'uuid';
 
-export default function Form() {
 
-    const [activity, setActivity] = useState({
-        category: '',
+type FormProps = {
+    dispatch: Dispatch<AcitivityActions>;
+}
+
+
+export default function Form({dispatch}: FormProps) {
+
+    const initialState : Activity = {
+        id: uuidv4(),
+        category: 1,
         name: "",
         calories: 0
-    })
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>)=>{
-        setActivity({
-            ...activity,
-            [e.target.id]: e.target.value
-        })
     }
 
+    const [activity, setActivity] = useState<Activity>(initialState);
+    
+    const capitalize = (text: string) =>
+        text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+    
+    const parsedValue = (id: string, value: string) => {
+        if (id === 'name') return capitalize(value.trim());
+        const num = Number(value);
+        return isNaN(num) ? 0 : num;
+    };
+    
+    
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { id, value } = e.target;
+    
+        setActivity({
+            ...activity,
+            [id]: parsedValue(id, value)
+        });
+    };
+
+    const isValidActivity = () => {
+        const { name, calories } = activity;
+        return name.trim() !== "" && calories > 0 && calories <= 3000;
+    };
+
+
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        dispatch({type: 'save-activity', payload: {newActivity: activity}});
+        setActivity({
+            ...initialState,
+            id: uuidv4()
+        });
+    }
+    
+
     return (
-        <form className="space-y-6 bg-white shadow-xl p-5 md:p-10 rounded-2xl max-w-lg mx-auto mt-4">
+        <form className="space-y-6 bg-white shadow-xl p-5 md:p-10 rounded-2xl max-w-3xl mx-auto mt-4"
+            onSubmit={handleSubmit}
+        >
             <div>
                 <label htmlFor="category" className="block text-sm font-semibold text-gray-600 mb-2">Categoría</label>
                 <select
@@ -57,14 +99,14 @@ export default function Form() {
                     className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500"
                     value={activity.calories}
                     onChange={handleChange}
-
                 />
             </div>
 
             <input
                 type="submit"
-                value="Agregar Actividad"
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors cursor-pointer"
+                value={`${activity.category === 1 ? "Guardar Comida" : "Guardar Ejercicio"}`}
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={!isValidActivity()}
             />
         </form>
     );
